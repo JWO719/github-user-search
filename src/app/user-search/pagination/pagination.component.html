@@ -1,0 +1,9 @@
+<div class="pagination-container">
+  <div class="flex-item align-right">
+    <button mat-button (click)="decreasePage()" [disabled]="page === 1"><mat-icon >keyboard_arrow_left</mat-icon></button>
+  </div>
+  <span class="flex-item" tabindex="0">{{page}}</span>
+  <div class="flex-item align-left">
+    <button mat-button (click)="increasePage()" [disabled]="page >= maxPage"><mat-icon >keyboard_arrow_right</mat-icon></button>
+  </div>
+</div>

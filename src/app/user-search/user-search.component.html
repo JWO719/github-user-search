@@ -1,0 +1,29 @@
+<div class="container">
+  <p tabindex="0">
+    You can enter here a search term. This search term will be used to query the GitHub User API.
+    A list of the queried users can be found below.
+  </p>
+  <form [formGroup]="userForm" class="userSearchForm">
+    <mat-form-field class="userSearchFormSearchTerm">
+      <mat-label>Search for users</mat-label>
+      <input matInput type="text" formControlName="searchTerm">
+      <button mat-button *ngIf="userForm.get('searchTerm').value" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormControl('searchTerm')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <span *ngIf="(usersResponse$ | async)?.total_count as totalCount"> Total Items: {{totalCount}}
+    </span>
+  </form>
+
+  <cdk-virtual-scroll-viewport itemSize="10" class="user-list">
+    <ng-container *cdkVirtualFor="let user of users$"
+      class="user-entry" >
+      <a href="user.url" target="_blank">
+        <app-user-item class="default-margin" [name]="user.login" [src]="user.avatar_url"></app-user-item>
+      </a>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+  <div class="pagination">
+    <app-pagination [(page)]="page" [maxPage]="totalPages$ | async" (pageChange)="publishPageChage($event)"></app-pagination>
+  </div>
+</div>
